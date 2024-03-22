@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  username: postgres
+  password: postgres  # Use the same password as configured in your GitHub Actions services
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: my_app_development
+
+test:
+  <<: *default
+  database: my_test_database  # This should match the DB name in your GitHub Actions services
