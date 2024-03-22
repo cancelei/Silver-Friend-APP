@@ -1,0 +1,42 @@
+name: Rails CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: my_test_database
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0.0
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get -yqq install libpq-dev
+        bundle install --jobs 4 --retry 3
+
+    - name: Setup database
+      run: |
+        cp config/database.ci.yml config/database.yml
+        bin/rails db:create db:schema:load --trace
+
+    - name: Run tests
+      run: bundle exec rspec
