@@ -1,0 +1,16 @@
+<!-- app/views/shared/_navbar.html.erb -->
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center text-white">
+    <div class="text-lg font-semibold">
+      <%= link_to "SilverAppLogo", root_path, class: "hover:text-gray-300" %>
+    </div>
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to 'Log out', destroy_dim_user_session_path, method: :delete, class: "px-4 py-2 rounded bg-red-500 hover:bg-red-700" %>
+      <% else %>
+        <%= link_to 'Sign in', new_dim_user_session_path, class: "px-4 py-2 rounded bg-blue-500 hover:bg-blue-700 mx-2" %>
+        <%= link_to 'Sign up', new_dim_user_registration_path, class: "px-4 py-2 rounded bg-green-500 hover:bg-green-700" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

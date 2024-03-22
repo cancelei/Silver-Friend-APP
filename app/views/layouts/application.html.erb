@@ -12,7 +12,12 @@
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
     <main class="container mx-auto mt-28 px-5 flex">
+      <% flash.each do |name, msg| %>
+        <%= content_tag(:div, msg, class: "flash #{name}") %>
+      <% end %>
+
       <%= yield %>
     </main>
   </body>

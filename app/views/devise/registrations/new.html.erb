@@ -8,6 +8,10 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
+  <div>
+    <%= f.select :account_type, options_for_select(DimUser.account_types.keys.map { |type| [type.titleize, type] }), {}, { required: true } %>
+  </div>
+  
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
