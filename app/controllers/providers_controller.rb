@@ -17,6 +17,6 @@ class ProvidersController < ApplicationController
   private
 
   def provider_params
-    params.require(:provider).permit(:your, :provider, :attributes, :here)
+    params.require(:dim_provider).permit(:description, :documentation_approved, :specific_service_qualified)
   end
 end
