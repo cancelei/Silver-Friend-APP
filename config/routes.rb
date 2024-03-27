@@ -7,4 +7,14 @@ Rails.application.routes.draw do
 
   get 'home/index'
   root to: 'home#index'
+
+  namespace :providers do
+    get 'dashboard', to: 'dashboard#show'
+    resources :dim_availabilities, only: [:new, :create, :index]
+    resources :dim_providers, except: [:new, :create]
+  end
+
+  resources :dim_providers
+
+  get 'providers/new', to: 'providers#new', as: 'new_provider'
 end

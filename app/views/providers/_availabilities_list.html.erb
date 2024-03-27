@@ -1,0 +1,5 @@
+<% availabilities.each do |availability| %>
+  <div>
+    <%= availability.service.name %>: <%= availability.start_time %> to <%= availability.end_time %>
+  </div>
+<% end %>

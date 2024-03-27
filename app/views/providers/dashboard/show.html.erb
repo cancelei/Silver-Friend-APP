@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "provider_dashboard" do %>
+  <%= render 'providers/availabilities_form' %>
+  <%= render 'providers/availabilities_list', availabilities: @provider.availabilities %>
+<% end %>

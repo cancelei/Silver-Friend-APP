@@ -5,6 +5,8 @@ class DimUser < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one :provider, class_name: 'DimProvider', foreign_key: 'dim_user_id'
+
   enum account_type: { consumer: 'consumer', provider: 'provider' }
 
   validates :account_type, presence: true, inclusion: { in: account_types.keys }
