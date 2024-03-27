@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_214818) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_27_133016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_214818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_dim_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "dim_availabilities", force: :cascade do |t|
+    t.bigint "provider_id", null: false
+    t.bigint "service_id", null: false
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id", "service_id", "start_time", "end_time"], name: "index_dim_availabilities_on_provider_service_and_times", unique: true
+    t.index ["provider_id"], name: "index_dim_availabilities_on_provider_id"
+    t.index ["service_id"], name: "index_dim_availabilities_on_service_id"
   end
 
   create_table "dim_providers", force: :cascade do |t|
@@ -80,6 +92,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_214818) do
     t.index ["user_id"], name: "index_fact_appointments_on_user_id"
   end
 
+  add_foreign_key "dim_availabilities", "dim_providers", column: "provider_id"
+  add_foreign_key "dim_availabilities", "dim_services", column: "service_id"
   add_foreign_key "dim_providers", "dim_users"
   add_foreign_key "dim_services", "dim_providers", column: "provider_id"
   add_foreign_key "fact_appointments", "dim_providers", column: "provider_id"
