@@ -20,4 +20,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:account_type])
     devise_parameter_sanitizer.permit(:account_update, keys: [:account_type])
   end
+
+  def after_sign_in_path_for(resource)
+    # Check if the user is a provider and redirect them accordingly
+    if resource.provider? # Assuming you have a method or check to identify a provider
+      providers_dashboard_path # Path to the provider's dashboard
+    else
+      super # Use the default redirection for other types of users
+    end
+  end
 end

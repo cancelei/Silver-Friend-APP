@@ -11,12 +11,10 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   namespace :providers do
-    get 'dashboard', to: 'dashboard#show'
+    get 'dashboard', to: 'dashboard#show', as: :dashboard
     resources :dim_availabilities, only: [:new, :create, :index], controller: 'providers/availabilities'
     resources :dim_providers, except: [:new, :create]
   end
 
   get 'consumers/dashboard', to: 'consumers#dashboard', as: :consumers_dashboard
-
-  get 'providers/new', to: 'providers#new', as: 'new_provider'
 end

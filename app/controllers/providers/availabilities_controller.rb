@@ -14,7 +14,10 @@ module Providers
     def create
       @availability = @provider.availabilities.build(availability_params)
       if @availability.save
-        redirect_to providers_dashboard_path, notice: 'Availability added successfully.'
+        respond_to do |format|
+          format.html { redirect_to providers_dashboard_path, notice: 'Availability added successfully.' }
+          format.turbo_stream
+        end
       else
         render :new
       end
