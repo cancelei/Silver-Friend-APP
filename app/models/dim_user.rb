@@ -10,4 +10,13 @@ class DimUser < ApplicationRecord
   enum account_type: { consumer: 0, provider: 1 }
 
   validates :account_type, presence: true, inclusion: { in: account_types.keys }
+
+  # Custom methods to encapsulate account type logic
+  def provider?
+    account_type == 'provider'
+  end
+
+  def consumer?
+    account_type == 'consumer'
+  end
 end
